@@ -1,0 +1,10 @@
+{
+  "autoload": {
+    "files": [
+      "./includes/__functions.php"
+    ],
+    "psr-4": {
+      "DirectoryManager\\": "./includes"
+    }
+  }
+}
