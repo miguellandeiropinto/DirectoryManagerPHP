@@ -9,18 +9,14 @@
 namespace DirectoryManager;
 
 
-class FileManager
+class FileManager extends AbstractManager
 {
 
-    public $ctx = './';
-    public $dirm = null;
+    public $ctx = '';
 
-    public function __construct($ctx, $dirm)
+    public function __construct($ctx)
     {
-
-        $this->ctx = $ctx;
-        $this->dirm = $dirm;
-
+        parent::__construct($ctx);
     }
 
     public function mkfile($name = null)
@@ -30,9 +26,9 @@ class FileManager
             throw new \InvalidArgumentException("file name cannot be null!");
 
         try {
-            $fh = fopen($this->dirm->current_path . '/' . $name, 'w');
+            $fh = @fopen($this->current_path . '/' . $name, 'w');
             fclose($fh);
-            return File::setup($this->dirm->current_path . '/' . $name);
+            return new File($this->current_path . '/' . $name);
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
@@ -47,7 +43,7 @@ class FileManager
         if (!$name)
             throw new \InvalidArgumentException("file name cannot be null!");
 
-        if (unlink($this->dirm->current_path . '/' . $name))
+        if (@unlink($this->current_path . '/' . $name))
             return true;
 
         return false;
@@ -61,7 +57,7 @@ class FileManager
             throw new \InvalidArgumentException('this method has 2 mandatory parameters.');
 
         try {
-            if (rename($this->dirm->current_path . '/' . $file, $this->dirm->current_path . '/' . $name))
+            if (@rename($this->current_path . '/' . $file, $this->current_path . '/' . $name))
                 return true;
         } catch (Exception $e) {
             echo $e->getMessage() . "\n";
@@ -78,7 +74,7 @@ class FileManager
             throw new \InvalidArgumentException('this method has 2 mandatory parameters.');
 
         try {
-            if (copy($this->dirm->current_path . '/' . $file, $this->dirm->current_path . '/' . $dest))
+            if (@copy($this->current_path . '/' . $file, $this->current_path . '/' . $dest))
                 return true;
         } catch (Exception $e) {
             echo $e->getMessage() . "\n";
@@ -90,8 +86,8 @@ class FileManager
 
     public function find($path)
     {
-        if (file_exists($this->dirm->current_path . '/' . $path)) {
-            return new File($this->dirm->current_path . '/' . $path);
+        if (file_exists($this->current_path . '/' . $path)) {
+            return new File($this->current_path . '/' . $path);
         }
         return false;
     }

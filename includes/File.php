@@ -31,11 +31,6 @@ class File
         return file_get_contents($this->abspath);
     }
 
-    public function setup($path)
-    {
-        return new self($path);
-    }
-
     public function save()
     {
         file_put_contents($this->abspath, $this->content);
@@ -48,10 +43,10 @@ class File
         return $this;
     }
 
-    public function empty ()
+    public function emptyFile()
     {
         file_put_contents($this->abspath, '');
-        return $this;
+        return new self($this->abspath);
     }
 
 }
