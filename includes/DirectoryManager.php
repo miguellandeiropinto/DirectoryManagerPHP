@@ -6,7 +6,10 @@
  * Time: 19:24
  */
 
+declare(strict_types=1);
+
 namespace DirectoryManager;
+
 
 class DirectoryManager extends AbstractManager
 {

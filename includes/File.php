@@ -6,6 +6,8 @@
  * Time: 02:38
  */
 
+declare(strict_types=1);
+
 namespace DirectoryManager;
 
 
